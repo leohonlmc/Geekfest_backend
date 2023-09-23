@@ -34,7 +34,7 @@ mongoose
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "https://keyholder.onrender.com"],
     methods: ["GET", "POST", "DELETE", "PATCH"],
     credentials: true,
     secure: true,
