@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Image = require("../Models/ImageModel");
-const bcrypt = require("bcrypt");
 
 module.exports.uploadImage = async (req, res, next) => {
   try {
