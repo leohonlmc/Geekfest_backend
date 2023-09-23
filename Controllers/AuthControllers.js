@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("../Models/UserModel");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 
 const maxAge = 3 * 24 * 60 * 60;
 
