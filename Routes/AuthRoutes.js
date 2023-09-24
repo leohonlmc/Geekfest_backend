@@ -10,8 +10,8 @@ const router = require("express").Router();
 
 router.post("/google/register", googleRegister);
 router.get("/user/:id", getUser);
-router.get("/generate", generateSecret);
-router.post("/verify", verifyToken);
+router.get("/generate/:id", generateSecret);
+router.post("/verify/:id", verifyToken);
 
 router.post("/image/import", uploadImage);
 

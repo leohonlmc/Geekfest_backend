@@ -37,29 +37,16 @@ const userSchema = new mongoose.Schema({
   sub: {
     type: String,
   },
+  verified: {
+    type: Boolean,
+    default: false,
+  },
+  secret: {
+    type: String,
+  },
+  qrcode: {
+    type: String,
+  },
 });
-
-// userSchema.pre("save", async function (next) {
-//   const salt = await bcrypt.genSalt();
-//   this.password = await bcrypt.hash(this.password, salt);
-//   next();
-// });
-
-// userSchema.statics.login = async function (email, password) {
-//   const user = await this.findOne({ email });
-
-//   if (user) {
-//     if (user.regStatus === "Pending") {
-//       throw Error("User is not verified");
-//     }
-
-//     const auth = await bcrypt.compare(password, user.password);
-//     if (auth) {
-//       return user;
-//     }
-//     throw Error("incorrect password");
-//   }
-//   throw Error("incorrect email");
-// };
 
 module.exports = mongoose.model("Users", userSchema);
