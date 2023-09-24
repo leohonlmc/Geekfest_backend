@@ -97,20 +97,6 @@ module.exports.getUser = async (req, res) => {
   }
 };
 
-// module.exports.generateSecret = async (req, res) => {
-//   const secret = speakeasy.generateSecret({ length: 20 });
-//   const dataURL = await toDataURL(secret.otpauth_url);
-//   res.json({ secret: secret.base32, dataURL });
-// };
-
-// module.exports.verifyToken = (req, res) => {
-//   const { token, secret } = req.body;
-//   console.log("Token:", token);
-//   console.log("Secret:", secret);
-//   const verified = speakeasy.totp.verify({ secret, encoding: "base32", token });
-//   res.json({ verified });
-// };
-
 module.exports.generateSecret = async (req, res) => {
   try {
     const secret = speakeasy.generateSecret({ length: 20 });
@@ -129,9 +115,6 @@ module.exports.verifyToken = (req, res) => {
     if (!token || !secret) {
       return res.status(400).json({ error: "Token and secret are required" });
     }
-
-    console.log("Token:", token);
-    console.log("Secret:", secret);
 
     const verified = speakeasy.totp.verify({
       secret,
