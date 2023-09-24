@@ -112,7 +112,6 @@ module.exports.generateSecret = async (req, res) => {
 
       res.json({ secret: secret.base32, dataURL, verified: false });
     } else {
-      //return true, but noting
       res
         .status(200)
         .json({ secret: user.secret, dataURL: user.qrcode, verified: true });
@@ -123,32 +122,9 @@ module.exports.generateSecret = async (req, res) => {
   }
 };
 
-// module.exports.verifyToken = (req, res) => {
-//   try {
-//     const { token, secret } = req.body;
-
-//     if (!token || !secret) {
-//       return res.status(400).json({ error: "Token and secret are required" });
-//     }
-
-//     const verified = speakeasy.totp.verify({
-//       secret,
-//       encoding: "base32",
-//       token,
-//     });
-
-//     res.json({ verified });
-//   } catch (error) {
-//     console.error("Error verifying token:", error);
-//     res.status(500).json({ error: "Error verifying token" });
-//   }
-// };
-
 module.exports.verifyToken = async (req, res) => {
   try {
     const { token, secret } = req.body;
-
-    // console.log(token, secret);
 
     if (!token || !secret) {
       return res.status(400).json({ error: "Token and secret are required" });
