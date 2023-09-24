@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const User = require("../Models/UserModel");
 const jwt = require("jsonwebtoken");
+const speakeasy = require("speakeasy");
+const { toDataURL } = require("qrcode");
 
 const maxAge = 3 * 24 * 60 * 60;
 
@@ -92,5 +94,54 @@ module.exports.getUser = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error });
+  }
+};
+
+// module.exports.generateSecret = async (req, res) => {
+//   const secret = speakeasy.generateSecret({ length: 20 });
+//   const dataURL = await toDataURL(secret.otpauth_url);
+//   res.json({ secret: secret.base32, dataURL });
+// };
+
+// module.exports.verifyToken = (req, res) => {
+//   const { token, secret } = req.body;
+//   console.log("Token:", token);
+//   console.log("Secret:", secret);
+//   const verified = speakeasy.totp.verify({ secret, encoding: "base32", token });
+//   res.json({ verified });
+// };
+
+module.exports.generateSecret = async (req, res) => {
+  try {
+    const secret = speakeasy.generateSecret({ length: 20 });
+    const dataURL = await toDataURL(secret.otpauth_url);
+    res.json({ secret: secret.base32, dataURL });
+  } catch (error) {
+    console.error("Error generating secret:", error);
+    res.status(500).json({ error: "Error generating secret" });
+  }
+};
+
+module.exports.verifyToken = (req, res) => {
+  try {
+    const { token, secret } = req.body;
+
+    if (!token || !secret) {
+      return res.status(400).json({ error: "Token and secret are required" });
+    }
+
+    console.log("Token:", token);
+    console.log("Secret:", secret);
+
+    const verified = speakeasy.totp.verify({
+      secret,
+      encoding: "base32",
+      token,
+    });
+
+    res.json({ verified });
+  } catch (error) {
+    console.error("Error verifying token:", error);
+    res.status(500).json({ error: "Error verifying token" });
   }
 };
