@@ -105,7 +105,7 @@ module.exports.generateSecret = async (req, res) => {
       //generate QR code
       const secret = speakeasy.generateSecret({ length: 20 });
       const dataURL = await toDataURL(secret.otpauth_url);
-      user.verified = true;
+
       user.secret = secret.base32;
       user.qrcode = dataURL;
       user.save();
